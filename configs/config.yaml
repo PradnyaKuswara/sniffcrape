@@ -1,10 +1,10 @@
 server:
-  port: "9000"
+  port: ${SERVER_PORT}
 
 database:
-  host: "localhost"
-  port: 5432
-  user: "kojidev"
-  password: "pradnyaka24"
-  dbname: "sniffcrape"
-  sslmode: "disable"
+  host: ${DATABASE_HOST}
+  port: ${DATABASE_PORT}
+  user: ${DATABASE_USER}
+  password: ${DATABASE_PASSWORD}
+  dbname: ${DATABASE_DBNAME}
+  sslmode: ${DATABASE_SSLMODE}

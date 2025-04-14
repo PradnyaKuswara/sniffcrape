@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/PradnyaKuswara/sniffcrape/pkg/services"
+	"github.com/PradnyaKuswara/sniffcrape/internal/services"
 	"github.com/PradnyaKuswara/sniffcrape/pkg/utils"
 	"github.com/gin-gonic/gin"
 )

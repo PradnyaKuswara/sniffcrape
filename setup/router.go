@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/PradnyaKuswara/sniffcrape/pkg/routes"
+	"github.com/PradnyaKuswara/sniffcrape/internal/routes"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -13,7 +13,7 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 	mode := os.Getenv("GIN_MODE")
 	fmt.Println("GIN_MODE:", mode)
     if mode == "" {
-        mode = gin.DebugMode // default fallback
+        mode = gin.DebugMode
     }
 	gin.SetMode(mode)
 
@@ -24,6 +24,7 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 
 	// Set up routes
 	routes.RegisterUserRoutes(r, db)
+	routes.RegisterScrapeResult(r, db)
 
 	return r
 }

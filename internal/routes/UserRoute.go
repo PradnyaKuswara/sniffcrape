@@ -1,17 +1,17 @@
 package routes
 
 import (
-	"github.com/PradnyaKuswara/sniffcrape/pkg/handlers"
-	"github.com/PradnyaKuswara/sniffcrape/pkg/repositories"
-	"github.com/PradnyaKuswara/sniffcrape/pkg/services"
+	"github.com/PradnyaKuswara/sniffcrape/internal/handlers"
+	"github.com/PradnyaKuswara/sniffcrape/internal/repositories"
+	"github.com/PradnyaKuswara/sniffcrape/internal/services"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 func RegisterUserRoutes(r *gin.Engine, db *gorm.DB) {
 	repo := &repositories.UserRepository{DB: db}
-	userService := &services.UserService{UserRepository: repo}
-	userHandler := &handlers.UserHandler{UserService: userService}
+  userService := services.NewUserService(repo)
+	userHandler := handlers.NewUserHandler(userService)
 
 	userRoutes := r.Group("/api/v1/users")
 	{

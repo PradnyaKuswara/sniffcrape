@@ -1,0 +1,14 @@
+# .air.toml
+
+[build]
+  cmd = "go build -o tmp/main.exe ./cmd/sniffcrape"
+  bin = "tmp/main.exe"
+  include_ext = ["go"]
+  exclude_dir = ["tmp", "vendor"]
+
+[run]
+  cmd = "cmd /c tmp\\main.exe"
+
+[log]
+  time = true
+

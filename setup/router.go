@@ -12,9 +12,9 @@ import (
 func InitRouter(db *gorm.DB) *gin.Engine {
 	mode := os.Getenv("GIN_MODE")
 	fmt.Println("GIN_MODE:", mode)
-    if mode == "" {
-        mode = gin.DebugMode
-    }
+	if mode == "" {
+		mode = gin.DebugMode
+	}
 	gin.SetMode(mode)
 
 	r := gin.Default()
@@ -25,6 +25,7 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 	// Set up routes
 	routes.RegisterUserRoutes(r, db)
 	routes.RegisterScrapeResult(r, db)
+	routes.RegisterAuthRoutes(r, db)
 
 	return r
 }

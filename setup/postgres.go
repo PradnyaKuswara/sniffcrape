@@ -21,8 +21,8 @@ func InitPostgres(cfg *Config) *gorm.DB {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	db.AutoMigrate(&models.UserMigration{})
-	db.AutoMigrate(&models.ScrapeResultModel{})
+	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.ScrapeResult{})
 
 	return db
 }

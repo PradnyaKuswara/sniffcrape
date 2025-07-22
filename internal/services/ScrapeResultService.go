@@ -15,7 +15,7 @@ func NewScrapeResultService(repo repositories.ScrapeResultRepositoryInterface) *
 	}
 }
 
-func (s *ScrapeResultService) GetAllScrapeResults() ([]models.ScrapeResultModel, error) {
+func (s *ScrapeResultService) GetAllScrapeResults() ([]models.ScrapeResult, error) {
 	scrapeResults, err := s.ScrapeResultRepositoryInterface.GetAllScrapeResults()
 	if err != nil {
 		return nil, err
@@ -23,24 +23,24 @@ func (s *ScrapeResultService) GetAllScrapeResults() ([]models.ScrapeResultModel,
 	return scrapeResults, nil
 }
 
-func (s *ScrapeResultService) GetScrapeResultByID(id string) (models.ScrapeResultModel, error) {
+func (s *ScrapeResultService) GetScrapeResultByID(id string) (models.ScrapeResult, error) {
 	scrapeResult, err := s.ScrapeResultRepositoryInterface.GetScrapeResultByID(id)
 	if err != nil {
-		return models.ScrapeResultModel{}, err
+		return models.ScrapeResult{}, err
 	}
 	return scrapeResult, nil
 }
 
-func (s *ScrapeResultService) CreateScrapeResult(req models.ScrapeResultRequest) (models.ScrapeResultModel, error) {
-	data := models.ScrapeResultModel{
-		Title: req.Title,
-		Url:   req.Url,
+func (s *ScrapeResultService) CreateScrapeResult(req models.ScrapeResultRequest) (models.ScrapeResult, error) {
+	data := models.ScrapeResult{
+		Title:       req.Title,
+		Url:         req.Url,
 		Description: req.Description,
 	}
 
 	result, err := s.ScrapeResultRepositoryInterface.CreateScrapeResult(data)
 	if err != nil {
-		return models.ScrapeResultModel{}, err
+		return models.ScrapeResult{}, err
 	}
 
 	return result, nil

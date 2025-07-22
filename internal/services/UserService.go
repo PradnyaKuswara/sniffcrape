@@ -13,10 +13,18 @@ func NewUserService(repo repositories.UserRepositoryInterface) *UserService {
 	return &UserService{UserInterface: repo}
 }
 
-func (s *UserService) GetUserByID(id string) (models.User, error) {
+func (s *UserService) GetUserByID(id string) (*models.User, error) {
 	user, err := s.UserInterface.GetUserByID(id)
 	if err != nil {
-		return models.User{}, err
+		return nil, err
+	}
+	return user, nil
+}
+
+func (s *UserService) GetUserByEmail(email string) (*models.User, error) {
+	user, err := s.UserInterface.GetUserByEmail(email)
+	if err != nil {
+		return nil, err
 	}
 	return user, nil
 }

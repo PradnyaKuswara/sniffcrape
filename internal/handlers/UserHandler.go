@@ -21,7 +21,8 @@ func NewUserHandler(userService *services.UserService) *UserHandler {
 func (h *UserHandler) GetUserByID(id string, c *gin.Context) {
 	user, err := h.UserService.GetUserByID(id)
 	if err != nil {
-		utils.RespondWithError(c, http.StatusInternalServerError, "Failed to get users")
+		status, message := utils.MapErrorToStatusCode(err)
+		utils.RespondWithError(c, status, message)
 		return
 	}
 	utils.RespondWithSuccess(c, http.StatusOK, user)

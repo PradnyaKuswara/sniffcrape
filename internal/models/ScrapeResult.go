@@ -1,31 +1,30 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
 
-// type ScrapeResult struct {
-// 	ID          uint   `json:"id"`
-// 	Url         string `json:"url"`
-// 	Title       string `json:"title"`
-// 	Description string `json:"description"`
-// 	CreatedAt   string `json:"created_at"`
-// 	UpdatedAt   string `json:"updated_at"`
-// 	DeletedAt   string `json:"deleted_at,omitempty"`
-// }
+	"gorm.io/gorm"
+)
 
-type ScrapeResultModel struct {
-	gorm.Model
-	Url 		string `json:"url"`
-	Title 		string `json:"title"`
-	Description string `json:"description"`
+// ScrapeResultModel digunakan untuk operasi ke database
+type ScrapeResult struct {
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	Url         string         `json:"url"`
+	Title       string         `json:"title"`
+	Description string         `json:"description"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `json:"deleted_at,omitempty" gorm:"index"`
 }
 
+// ScrapeResultRequest digunakan untuk validasi input dari client
 type ScrapeResultRequest struct {
-	Url         string `json:"url" binding:"required"`
-	Title       string `json:"title" binding:"required"`
-	Description string `json:"description" binding:"required"`
+	Url         string `json:"url" validate:"required"` // pakai validator, bukan binding (sesuai obrolan sebelumnya)
+	Title       string `json:"title" validate:"required"`
+	Description string `json:"description" validate:"required"`
 }
 
-func (ScrapeResultModel) TableName() string {
+// TableName memastikan nama tabel sesuai
+func (ScrapeResult) TableName() string {
 	return "scrape_results"
 }
-

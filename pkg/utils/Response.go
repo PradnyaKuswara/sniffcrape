@@ -5,7 +5,8 @@ import (
 )
 
 type Response struct {
-	Status  bool        `json:"status"`
+	Status  int         `json:"status"`
+	Code    int         `json:"code,omitempty"`
 	Message string      `json:"message,omitempty"`
 	Data    interface{} `json:"data,omitempty"`
 }
@@ -13,7 +14,7 @@ type Response struct {
 // Jika berhasil
 func RespondWithSuccess(c *gin.Context, code int, data interface{}) {
 	c.JSON(code, Response{
-		Status: true,
+		Status: code,
 		Data:   data,
 	})
 }
@@ -21,7 +22,7 @@ func RespondWithSuccess(c *gin.Context, code int, data interface{}) {
 // Jika error
 func RespondWithError(c *gin.Context, code int, message string) {
 	c.JSON(code, Response{
-		Status:  false,
+		Status:  code,
 		Message: message,
 	})
 }

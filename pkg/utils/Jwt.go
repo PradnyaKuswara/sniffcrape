@@ -4,9 +4,10 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/spf13/viper"
 )
 
-var jwtKey = []byte("secret")
+var jwtKey = []byte(viper.GetString("JWT_SECRET"))
 
 func GenerateJWT(userID uint) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{

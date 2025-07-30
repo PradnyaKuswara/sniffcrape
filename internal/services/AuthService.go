@@ -19,20 +19,21 @@ func NewAuthService(
 	}
 }
 
-func (s *AuthService) Login(email, password string) (string, error) {
+func (s *AuthService) Login(email, password string) (*models.User, string, error) {
 	user, err := s.UserService.GetUserByEmail(email)
 	if err != nil {
 		err = customerrors.ErrInvalidCredentials
-		return "", err
+		return nil, "", err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 
 	if err != nil {
-		return "", customerrors.ErrInvalidCredentials
+		return nil, "", customerrors.ErrInvalidCredentials
 	}
 
-	return utils.GenerateJWT(user.ID)
+	token, err := utils.GenerateJWT(user.ID)
+	return user, token, nil
 }
 
 func (s *AuthService) Register(authReq models.AuthRegisterRequest) error {
@@ -46,9 +47,12 @@ func (s *AuthService) Register(authReq models.AuthRegisterRequest) error {
 		return err
 	}
 	user := models.User{
-		Name:     authReq.Name,
-		Email:    authReq.Email,
-		Password: string(hashedPassword),
+		FirstName: authReq.FirstName,
+		LastName:  authReq.LastName,
+		Username:  authReq.Username,
+		AvatarURL: authReq.AvatarURL,
+		Email:     authReq.Email,
+		Password:  string(hashedPassword),
 	}
 	err = s.UserService.UserInterface.CreateUser(user)
 	if err != nil {

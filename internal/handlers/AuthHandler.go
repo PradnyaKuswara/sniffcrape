@@ -33,7 +33,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	token, err := h.AuthService.Login(loginRequest.Email, loginRequest.Password)
+	user, token, err := h.AuthService.Login(loginRequest.Email, loginRequest.Password)
 	if err != nil {
 		status, message := utils.MapErrorToStatusCode(err)
 		utils.RespondWithError(c, status, message)
@@ -42,7 +42,13 @@ func (h *AuthHandler) Login(c *gin.Context) {
 
 	response := &models.AuthResponse{
 		Token: token,
-		Id:    1,
+		User: models.AuthUser{
+			FirstName: user.FirstName,
+			LastName:  user.LastName,
+			Username:  user.Username,
+			AvatarURL: user.AvatarURL,
+			Email:     user.Email,
+		},
 	}
 
 	utils.RespondWithSuccess(c, http.StatusOK, response)

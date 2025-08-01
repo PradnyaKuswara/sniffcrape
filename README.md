@@ -19,7 +19,7 @@
 
 ### 🔧 Requirements
 
-- Go 1.20+ installed
+- Go 1.24.5+ installed
 - Git
 
 ### 📥 Clone the Repository

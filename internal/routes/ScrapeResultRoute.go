@@ -16,14 +16,6 @@ func RegisterScrapeResult(r *gin.Engine, db *gorm.DB) {
 
 	scrapeResultRoutes := r.Group("/api/v1/scrape-results").Use(middlewares.AuthMiddleware())
 	{
-		scrapeResultRoutes.GET("/", func(c *gin.Context) {
-			scrapeResultHandler.GetAllScrapeResults(c)
-		})
-
-		scrapeResultRoutes.POST("/", func(c *gin.Context) {
-			scrapeResultHandler.CreateScrapeResult(c)
-		})
-
 		scrapeResultRoutes.POST("/colly-scrap", func(c *gin.Context) {
 			scrapeResultHandler.CollyScrap(c)
 		})

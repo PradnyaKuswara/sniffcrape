@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/PradnyaKuswara/sniffcrape/internal/setup"
+	setup "github.com/PradnyaKuswara/sniffcrape/internal/setups"
 	"github.com/PradnyaKuswara/sniffcrape/pkg/logger"
 	"github.com/joho/godotenv"
 )

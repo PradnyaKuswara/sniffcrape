@@ -1,4 +1,4 @@
-package setup
+package setups
 
 import (
 	"log"
@@ -24,7 +24,7 @@ type Config struct {
 var AppConfig Config
 
 func InitConfig() *Config {
-	viper.SetConfigFile("configs/config.yaml")
+	viper.SetConfigFile("config/config.yaml")
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatal("Error reading config file", err)

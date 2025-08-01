@@ -27,18 +27,16 @@
 ```bash
 git clone https://github.com/PradnyaKuswara/sniffcrape.git
 cd sniffcrape
-go mod tidy
 ```
 
 ### 📥 Clone the Repository
+
 ```bash
 go mod tidy
 ```
 
 ### 📥 Run project locally
+
 ```bash
 go run cmd/sniffcrape/main.go
 ```
-
-
-

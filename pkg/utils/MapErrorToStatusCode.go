@@ -32,6 +32,9 @@ func MapErrorToStatusCode(err error) (int, string) {
 	case errors.Is(err, customerrors.ErrForbidden):
 		return http.StatusForbidden, customerrors.ErrForbidden.Error()
 
+	case errors.Is(err, customerrors.ErrUnauthenticated):
+		return http.StatusUnauthorized, customerrors.ErrUnauthenticated.Error()
+
 	case errors.Is(err, customerrors.ErrInvalidCredentials):
 		return http.StatusUnauthorized, customerrors.ErrInvalidCredentials.Error()
 

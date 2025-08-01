@@ -24,5 +24,9 @@ func RegisterScrapeResult(r *gin.Engine, db *gorm.DB) {
 			scrapeResultHandler.CreateScrapeResult(c)
 		})
 
+		scrapeResultRoutes.POST("/colly-scrap", func(c *gin.Context) {
+			scrapeResultHandler.CollyScrap(c)
+		})
+
 	}
 }

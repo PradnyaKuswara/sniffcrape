@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/PradnyaKuswara/sniffcrape/internal/models"
@@ -21,6 +22,7 @@ func NewScrapeResultHandler(scrapeResultService *services.ScrapeResultService) *
 
 func (s *ScrapeResultHandler) GetAllScrapeResults(c *gin.Context) {
 	scrapResults, err := s.ScrapeResultService.GetAllScrapeResults()
+	// get c
 	if err != nil {
 		utils.RespondWithError(c, http.StatusInternalServerError, "Failed to get scrap results")
 		return
@@ -44,4 +46,29 @@ func (s *ScrapeResultHandler) CreateScrapeResult(c *gin.Context) {
 	}
 
 	utils.RespondWithSuccess(c, http.StatusOK, result)
+}
+
+func (s *ScrapeResultHandler) CollyScrap(c *gin.Context) {
+	var scrapResult models.ScrapeResultRequestOnlyUrl
+
+	if err := c.ShouldBindJSON(&scrapResult); err != nil {
+		utils.RespondWithError(c, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+
+	if ok, err := utils.ValidateStruct(scrapResult); !ok {
+		status, message := utils.MapErrorToStatusCode(err)
+		utils.RespondWithError(c, status, message)
+		return
+	}
+
+	fmt.Println(scrapResult)
+
+	result, err := s.ScrapeResultService.CollyScrap(scrapResult.Url)
+	if err != nil {
+		utils.RespondWithError(c, http.StatusInternalServerError, "Failed to scrape URL")
+		return
+	}
+
+	utils.RespondWithSuccess(c, http.StatusOK, result, "Scraping successfully")
 }

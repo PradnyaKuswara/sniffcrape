@@ -21,5 +21,8 @@ func RegisterAuthRoutes(r *gin.Engine, db *gorm.DB) {
 		authRoutes.POST("/register", func(c *gin.Context) {
 			authHandler.Register(c)
 		})
+		authRoutes.POST("/validate", func(c *gin.Context) {
+			authHandler.ValidateUser(c)
+		})
 	}
 }

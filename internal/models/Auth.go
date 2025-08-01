@@ -17,8 +17,8 @@ type AuthRegisterRequest struct {
 }
 
 type JwtAttributes struct {
-	UserID    uint    `json:"user_id"`
-	UserEmail string  `json:"user_email"`
+	ID        uint    `json:"id"`
+	Email     string  `json:"email"`
 	Username  string  `json:"username"`
 	FirstName string  `json:"first_name"`
 	LastName  string  `json:"last_name"`
@@ -32,6 +32,11 @@ type AuthUser struct {
 	Username  string  `json:"username"`
 	AvatarURL *string `json:"avatar_url"`
 	Email     string  `json:"email"`
+}
+
+type AuthUserWithID struct {
+	UserID uint `json:"user_id"`
+	AuthUser
 }
 
 type AuthResponse struct {

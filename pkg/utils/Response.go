@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,18 +13,28 @@ type Response struct {
 	Data    interface{} `json:"data,omitempty"`
 }
 
-// Jika berhasil
-func RespondWithSuccess(c *gin.Context, code int, data interface{}) {
+func RespondWithSuccess(c *gin.Context, code int, data interface{}, message ...string) {
+	msg := "Success"
+
+	if len(message) > 0 {
+		msg = strings.Join(message, " ")
+	}
+
 	c.JSON(code, Response{
-		Status: code,
-		Data:   data,
+		Message: msg,
+		Status:  code,
+		Data:    data,
 	})
 }
 
-// Jika error
-func RespondWithError(c *gin.Context, code int, message string) {
+func RespondWithError(c *gin.Context, code int, message ...string) {
+	msg := "Something went wrong"
+	if len(message) > 0 {
+		msg = strings.Join(message, " ")
+	}
+
 	c.JSON(code, Response{
 		Status:  code,
-		Message: message,
+		Message: msg,
 	})
 }

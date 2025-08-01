@@ -2,9 +2,11 @@ package handlers
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/PradnyaKuswara/sniffcrape/internal/models"
 	"github.com/PradnyaKuswara/sniffcrape/internal/services"
+	customerrors "github.com/PradnyaKuswara/sniffcrape/pkg/errors"
 	"github.com/PradnyaKuswara/sniffcrape/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -33,22 +35,11 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	user, token, err := h.AuthService.Login(loginRequest.Email, loginRequest.Password)
+	response, err := h.AuthService.Login(loginRequest.Email, loginRequest.Password)
 	if err != nil {
 		status, message := utils.MapErrorToStatusCode(err)
 		utils.RespondWithError(c, status, message)
 		return
-	}
-
-	response := &models.AuthResponse{
-		Token: token,
-		User: models.AuthUser{
-			FirstName: user.FirstName,
-			LastName:  user.LastName,
-			Username:  user.Username,
-			AvatarURL: user.AvatarURL,
-			Email:     user.Email,
-		},
 	}
 
 	utils.RespondWithSuccess(c, http.StatusOK, response)
@@ -76,4 +67,27 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	}
 
 	utils.RespondWithSuccess(c, http.StatusCreated, "User registered successfully")
+}
+
+func (h *AuthHandler) ValidateUser(c *gin.Context) {
+	authHeader := c.GetHeader("Authorization")
+	if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
+		status, message := utils.MapErrorToStatusCode(customerrors.ErrUnauthenticated)
+		utils.RespondWithError(c, status, message)
+		c.Abort()
+		return
+	}
+
+	tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
+
+	authUser, err := h.AuthService.ValidateUser(tokenStr)
+
+	if err != nil {
+		status, message := utils.MapErrorToStatusCode(err)
+		utils.RespondWithError(c, status, message)
+		c.Abort()
+		return
+	}
+
+	utils.RespondWithSuccess(c, http.StatusOK, authUser)
 }

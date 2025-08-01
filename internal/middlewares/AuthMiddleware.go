@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/PradnyaKuswara/sniffcrape/internal/models"
+	customerrors "github.com/PradnyaKuswara/sniffcrape/pkg/errors"
 	"github.com/PradnyaKuswara/sniffcrape/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -17,7 +18,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
-			status, message := utils.MapErrorToStatusCode(jwt.ErrTokenMalformed)
+			status, message := utils.MapErrorToStatusCode(customerrors.ErrUnauthenticated)
 			utils.RespondWithError(c, status, message)
 			c.Abort()
 			return
@@ -25,12 +26,19 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
 
-		token, _ := jwt.ParseWithClaims(tokenStr, &models.JwtAttributes{}, func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.ParseWithClaims(tokenStr, &models.JwtAttributes{}, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, jwt.ErrSignatureInvalid
 			}
 			return jwtSecret, nil
 		})
+
+		if err != nil || token == nil {
+			status, message := utils.MapErrorToStatusCode(customerrors.ErrUnauthenticated)
+			utils.RespondWithError(c, status, message)
+			c.Abort()
+			return
+		}
 
 		claims, ok := token.Claims.(*models.JwtAttributes)
 		if !ok || claims.ExpiresAt == nil || claims.ExpiresAt.Time.Before(time.Now()) {
@@ -40,8 +48,8 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("userID", claims.UserID)
-		c.Set("userEmail", claims.UserEmail)
+		c.Set("userID", claims.ID)
+		c.Set("userEmail", claims.Email)
 		c.Set("username", claims.Username)
 		c.Set("firstName", claims.FirstName)
 		c.Set("lastName", claims.LastName)

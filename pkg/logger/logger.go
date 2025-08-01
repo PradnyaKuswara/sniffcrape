@@ -50,11 +50,20 @@ func InitLogger() {
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
 
-	file, err := os.OpenFile("storage/logs/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	// Buat direktori jika belum ada
+	logDir := "storage/logs"
+	if err := os.MkdirAll(logDir, os.ModePerm); err != nil {
+		logrus.Fatalf("Failed to create log directory: %v", err)
+	}
+
+	// Buka file log
+	logFile := logDir + "/app.log"
+	file, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		logrus.Fatalf("Failed to open log file: %v", err)
 	}
 
+	// Set output ke console + file
 	Log.SetOutput(&CustomWriter{
 		console: os.Stdout,
 		file:    file,

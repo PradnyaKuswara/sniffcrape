@@ -1,0 +1,27 @@
+time="2025-07-31T16:26:26+07:00" level=info msg="Starting server on port: 4001"
+time="2025-07-31T16:26:30+07:00" level=info msg="Starting server on port: 4001"
+time="2025-07-31T16:26:41+07:00" level=info msg="Starting server on port: 4001"
+[36mINFO   [0m[2025-07-31 16:28:46] Starting server on port: 4001                
+[36mINFO   [0m[2025-07-31T16:29:25+07:00] Starting server on port: 4001                
+[36mINFO[0m[2025-07-31T16:29:45+07:00] Starting server on port: 4001                
+time="2025-07-31T16:29:57+07:00" level=info msg="Starting server on port: 4001"
+time="2025-07-31 16:30:17" level=info msg="Starting server on port: 4001"
+time="2025-07-31 16:30:42" level=info msg="Starting server on port: 4001"
+time="2025-07-31 16:32:13" level=info msg=".env file loaded successfully"
+time="2025-07-31 16:32:14" level=info msg="Starting server on port: 4001"
+[36mINFO[0m[2025-07-31 17:18:15] .env file loaded successfully                
+[36mINFO[0m[2025-07-31 17:18:15] Starting server on port: 4001                
+time="2025-07-31 17:18:18" level=info msg=".env file loaded successfully"
+time="2025-07-31 17:18:18" level=info msg="Starting server on port: 4001"
+INFO[2025-07-31 17:19:35] .env file loaded successfully                
+INFO[2025-07-31 17:19:36] Starting server on port: 4001                
+INFO[2025-07-31 17:19:48] .env file loaded successfully                
+INFO[2025-07-31 17:19:48] Starting server on port: 4001                
+INFO[2025-07-31 17:21:29] .env file loaded successfully                
+INFO[2025-07-31 17:21:30] Starting server on port: 4001                
+INFO[2025-07-31 17:21:34] .env file loaded successfully                
+INFO[2025-07-31 17:21:34] Starting server on port: 4001                
+INFO[2025-07-31 17:21:38] .env file loaded successfully                
+INFO[2025-07-31 17:21:38] Starting server on port: 4001                
+INFO[2025-07-31 17:21:44] .env file loaded successfully                
+INFO[2025-07-31 17:21:44] Starting server on port: 4001                
